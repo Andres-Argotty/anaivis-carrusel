@@ -22,9 +22,9 @@ Las imágenes se generan con IA y se colocan en `assets/` con estos nombres exac
 
 | Archivo | Contenido |
 |---|---|
-| `colibri-tricolor.jpg` | Colibrí verde con cinta tricolor (plantilla base) |
-| `colibri-multicolor.jpg` | Colibrí en púrpura/azul/magenta |
-| `colibri-flor.jpg` | Colibrí azul y naranja con flor de hibisco |
+| `colibri-tricolor.png` | Colibrí verde con cinta tricolor (plantilla base) |
+| `colibri-multicolor.png` | Colibrí en púrpura/azul/magenta |
+| `colibri-flor.png` | Colibrí azul y naranja con flor de hibisco |
 
 Mientras no existan, el carrusel muestra un marcador en cada slide, así que la página
 funciona igual.
