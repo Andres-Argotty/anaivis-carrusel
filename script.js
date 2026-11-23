@@ -62,3 +62,39 @@
 
   update();
 })();
+
+// Selector de productos — muestra un panel a la vez según el botón activo.
+(function () {
+  const tabs = Array.from(document.querySelectorAll("#productTabs .tab"));
+  const panels = Array.from(document.querySelectorAll("#productPanels .panel"));
+  if (!tabs.length || !panels.length) return;
+
+  function select(product) {
+    tabs.forEach((t) => {
+      const active = t.dataset.product === product;
+      t.classList.toggle("is-active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    panels.forEach((p) => {
+      const active = p.dataset.product === product;
+      p.classList.toggle("is-active", active);
+      p.hidden = !active;
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => select(tab.dataset.product));
+  });
+
+  // Navegación con teclado entre los botones (flechas)
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      e.preventDefault();
+      const dir = e.key === "ArrowRight" ? 1 : -1;
+      const next = tabs[(i + dir + tabs.length) % tabs.length];
+      next.focus();
+      select(next.dataset.product);
+    });
+  });
+})();

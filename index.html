@@ -155,108 +155,122 @@
       <p class="section-eyebrow">Paso 2</p>
       <h2 class="section-title">El colibrí en productos</h2>
       <p class="section-intro">
-        El mismo diseño llevado a productos reales del emprendimiento. Cada imagen se
-        genera con IA tomando el colibrí como referencia, para conservar pose, colores y
-        estilo.
+        Elige un producto para verlo con el colibrí aplicado. Cada imagen se genera con
+        IA tomando el colibrí como referencia, para conservar pose, colores y estilo.
       </p>
     </div>
 
-    <section class="gallery" aria-label="Colibrí aplicado a productos">
-      <!-- Producto: Cuaderno -->
-      <article class="product">
-        <div class="product-media">
-          <img src="assets/producto-cuaderno.png"
-               alt="Cuaderno con el colibrí tricolor de Anaivi's"
-               loading="lazy"
-               onerror="this.closest('.product-media').classList.add('is-missing')" />
-          <div class="media-fallback">
-            <span>Coloca aquí<br /><code>assets/producto-cuaderno.png</code></span>
-          </div>
-        </div>
-        <div class="product-body">
-          <h3>Cuaderno</h3>
-          <p class="desc">El colibrí tricolor sobre la portada de un cuaderno artesanal.</p>
-          <div class="prompt">
-            <p class="prompt-label">Indicación a la IA</p>
-            <p class="prompt-text">
-              "Usa este colibrí exacto (misma pose, colores y estilo acuarela) impreso
-              sobre la portada de un cuaderno de tapa kraft. Mockup realista, fondo neutro."
-            </p>
-          </div>
-        </div>
-      </article>
+    <section class="selector" aria-label="Selector de productos">
+      <!-- Botones para elegir producto -->
+      <div class="selector-tabs" id="productTabs" role="tablist" aria-label="Elige un producto">
+        <button class="tab is-active" role="tab" aria-selected="true" data-product="cuaderno">
+          Cuaderno
+        </button>
+        <button class="tab" role="tab" aria-selected="false" data-product="camisa">
+          Camisa
+        </button>
+        <button class="tab" role="tab" aria-selected="false" data-product="reloj">
+          Reloj
+        </button>
+        <button class="tab" role="tab" aria-selected="false" data-product="separador">
+          Separador
+        </button>
+      </div>
 
-      <!-- Producto: Camisa -->
-      <article class="product">
-        <div class="product-media">
-          <img src="assets/producto-camisa.png"
-               alt="Camisa con el colibrí tricolor de Anaivi's"
-               loading="lazy"
-               onerror="this.closest('.product-media').classList.add('is-missing')" />
-          <div class="media-fallback">
-            <span>Coloca aquí<br /><code>assets/producto-camisa.png</code></span>
+      <!-- Paneles de producto (el JS muestra uno a la vez) -->
+      <div class="panels" id="productPanels">
+        <!-- Cuaderno -->
+        <article class="panel is-active" data-product="cuaderno" role="tabpanel">
+          <div class="panel-media">
+            <img src="assets/producto-cuaderno.png"
+                 alt="Cuaderno con el colibrí tricolor de Anaivi's"
+                 onerror="this.closest('.panel-media').classList.add('is-missing')" />
+            <div class="media-fallback">
+              <span>Coloca aquí<br /><code>assets/producto-cuaderno.png</code></span>
+            </div>
           </div>
-        </div>
-        <div class="product-body">
-          <h3>Camisa</h3>
-          <p class="desc">El colibrí estampado al frente de una camiseta.</p>
-          <div class="prompt">
-            <p class="prompt-label">Indicación a la IA</p>
-            <p class="prompt-text">
-              "Usa este colibrí exacto (misma pose, colores y estilo acuarela) estampado
-              al frente de una camiseta blanca. Mockup de prenda realista, fondo neutro."
-            </p>
+          <div class="panel-body">
+            <h3>Cuaderno</h3>
+            <p class="desc">El colibrí tricolor sobre la portada de un cuaderno artesanal.</p>
+            <div class="prompt">
+              <p class="prompt-label">Indicación a la IA</p>
+              <p class="prompt-text">
+                "Usa este colibrí exacto (misma pose, colores y estilo acuarela) impreso
+                sobre la portada de un cuaderno de tapa kraft. Mockup realista, fondo neutro."
+              </p>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- Producto: Reloj -->
-      <article class="product">
-        <div class="product-media">
-          <img src="assets/producto-reloj.png"
-               alt="Reloj de pared con el colibrí tricolor de Anaivi's"
-               loading="lazy"
-               onerror="this.closest('.product-media').classList.add('is-missing')" />
-          <div class="media-fallback">
-            <span>Coloca aquí<br /><code>assets/producto-reloj.png</code></span>
+        <!-- Camisa -->
+        <article class="panel" data-product="camisa" role="tabpanel" hidden>
+          <div class="panel-media">
+            <img src="assets/producto-camisa.png"
+                 alt="Camisa con el colibrí tricolor de Anaivi's"
+                 onerror="this.closest('.panel-media').classList.add('is-missing')" />
+            <div class="media-fallback">
+              <span>Coloca aquí<br /><code>assets/producto-camisa.png</code></span>
+            </div>
           </div>
-        </div>
-        <div class="product-body">
-          <h3>Reloj</h3>
-          <p class="desc">El colibrí integrado en un reloj de pared circular de madera.</p>
-          <div class="prompt">
-            <p class="prompt-label">Indicación a la IA</p>
-            <p class="prompt-text">
-              "Usa este colibrí exacto (misma pose, colores y estilo acuarela) sobre un
-              reloj de pared circular de madera, con números y manecillas. Mockup realista."
-            </p>
+          <div class="panel-body">
+            <h3>Camisa</h3>
+            <p class="desc">El colibrí estampado al frente de una camiseta.</p>
+            <div class="prompt">
+              <p class="prompt-label">Indicación a la IA</p>
+              <p class="prompt-text">
+                "Usa este colibrí exacto (misma pose, colores y estilo acuarela) estampado
+                al frente de una camiseta blanca. Mockup de prenda realista, fondo neutro."
+              </p>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- Producto: Separador de libros -->
-      <article class="product">
-        <div class="product-media">
-          <img src="assets/producto-separador.png"
-               alt="Separador de libros con el colibrí tricolor de Anaivi's"
-               loading="lazy"
-               onerror="this.closest('.product-media').classList.add('is-missing')" />
-          <div class="media-fallback">
-            <span>Coloca aquí<br /><code>assets/producto-separador.png</code></span>
+        <!-- Reloj -->
+        <article class="panel" data-product="reloj" role="tabpanel" hidden>
+          <div class="panel-media">
+            <img src="assets/producto-reloj.png"
+                 alt="Reloj de pared con el colibrí tricolor de Anaivi's"
+                 onerror="this.closest('.panel-media').classList.add('is-missing')" />
+            <div class="media-fallback">
+              <span>Coloca aquí<br /><code>assets/producto-reloj.png</code></span>
+            </div>
           </div>
-        </div>
-        <div class="product-body">
-          <h3>Separador de libros</h3>
-          <p class="desc">El colibrí en un separador vertical alargado.</p>
-          <div class="prompt">
-            <p class="prompt-label">Indicación a la IA</p>
-            <p class="prompt-text">
-              "Usa este colibrí exacto (misma pose, colores y estilo acuarela) en un
-              separador de libros vertical y estrecho, con remate artesanal. Mockup realista."
-            </p>
+          <div class="panel-body">
+            <h3>Reloj</h3>
+            <p class="desc">El colibrí integrado en un reloj de pared circular de madera.</p>
+            <div class="prompt">
+              <p class="prompt-label">Indicación a la IA</p>
+              <p class="prompt-text">
+                "Usa este colibrí exacto (misma pose, colores y estilo acuarela) sobre un
+                reloj de pared circular de madera, con números y manecillas. Mockup realista."
+              </p>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
+
+        <!-- Separador -->
+        <article class="panel" data-product="separador" role="tabpanel" hidden>
+          <div class="panel-media">
+            <img src="assets/producto-separador.png"
+                 alt="Separador de libros con el colibrí tricolor de Anaivi's"
+                 onerror="this.closest('.panel-media').classList.add('is-missing')" />
+            <div class="media-fallback">
+              <span>Coloca aquí<br /><code>assets/producto-separador.png</code></span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <h3>Separador de libros</h3>
+            <p class="desc">El colibrí en un separador vertical alargado.</p>
+            <div class="prompt">
+              <p class="prompt-label">Indicación a la IA</p>
+              <p class="prompt-text">
+                "Usa este colibrí exacto (misma pose, colores y estilo acuarela) en un
+                separador de libros vertical y estrecho, con remate artesanal. Mockup realista."
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
   </main>
 
