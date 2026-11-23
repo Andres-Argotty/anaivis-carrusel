@@ -1,14 +1,23 @@
-IMÁGENES DEL CARRUSEL — Anaivi's
-=================================
+IMÁGENES — Anaivi's
+===================
 
-Coloca aquí tus imágenes con EXACTAMENTE estos nombres para que
-aparezcan en el carrusel automáticamente:
+Coloca aquí tus imágenes con EXACTAMENTE estos nombres (todo en minúsculas)
+para que aparezcan automáticamente. GitHub Pages distingue mayúsculas.
 
+VARIANTES DE ESTILO (carrusel):
   1. colibri-tricolor.png    -> Colibrí verde con cinta tricolor (plantilla base)
   2. colibri-multicolor.png  -> Colibrí en púrpura/azul/magenta
   3. colibri-flor.png        -> Colibrí azul y naranja con flor de hibisco
 
+PRODUCTOS (galería):
+  4. producto-cuaderno.png   -> Colibrí sobre un cuaderno
+  5. producto-camisa.png     -> Colibrí estampado en una camisa
+  6. producto-reloj.png      -> Colibrí en un reloj de pared
+  7. producto-separador.png  -> Colibrí en un separador de libros
+
 Notas:
 - Los nombres deben coincidir EXACTAMENTE (incluida la extensión .png).
-- Mientras no existan, el carrusel muestra un marcador elegante en cada slide.
-- Tamaño recomendado: imágenes horizontales (apaisadas), mínimo 1000px de ancho.
+- Mientras no existan, cada espacio muestra un marcador "Coloca aquí".
+- Para generarlas: sube tu colibrí como referencia a la IA y pídele que lo
+  coloque sobre el producto (los prompts están escritos en la propia página).
+- Recomendado: comprime los PNG o usa .jpg para que pesen menos.
