@@ -35,8 +35,12 @@
   nextBtn.addEventListener("click", next);
   prevBtn.addEventListener("click", prev);
 
-  // Teclado: flechas izquierda/derecha
+  // Teclado: flechas izquierda/derecha.
+  // Se ignora si el foco está en un control interactivo (botones del
+  // selector de estilo u otro carrusel), para no mover este carrusel por error.
   document.addEventListener("keydown", (e) => {
+    const el = document.activeElement;
+    if (el && el.closest && el.closest("button, .selector, .carousel--products")) return;
     if (e.key === "ArrowRight") next();
     if (e.key === "ArrowLeft") prev();
   });
@@ -66,16 +70,14 @@
 // Selector de productos — muestra un panel a la vez según el botón activo.
 (function () {
   const styleTabs = Array.from(document.querySelectorAll("#styleTabs .tab"));
-  const productTabs = Array.from(document.querySelectorAll("#productTabs .tab"));
-  const img = document.getElementById("comboImg");
-  const file = document.getElementById("comboFile");
-  const title = document.getElementById("comboTitle");
-  const desc = document.getElementById("comboDesc");
-  const prompt = document.getElementById("comboPrompt");
-  const panel = document.getElementById("comboPanel");
-  if (!styleTabs.length || !productTabs.length || !img) return;
+  const track = document.getElementById("prodTrack");
+  if (!styleTabs.length || !track) return;
 
-  // Nombres legibles por producto y estilo
+  const slides = Array.from(track.children);
+  const prevBtn = document.getElementById("prodPrev");
+  const nextBtn = document.getElementById("prodNext");
+  const dotsContainer = document.getElementById("prodDots");
+
   const PRODUCTS = {
     cuaderno: "Cuaderno",
     camisa: "Camisa",
@@ -109,49 +111,81 @@
   };
 
   let style = "multicolor";
-  let product = "cuaderno";
+  let index = 0;
 
-  function render() {
-    const fileName = `${product}-${style}.png`;
-    const info = PRODUCT_INFO[product];
-    const styleName = STYLES[style];
+  // --- Carrusel de productos ---
+  const dots = slides.map((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "dot" + (i === 0 ? " is-active" : "");
+    dot.setAttribute("role", "tab");
+    dot.setAttribute("aria-label", "Ir al producto " + (i + 1));
+    dot.addEventListener("click", () => goTo(i));
+    dotsContainer.appendChild(dot);
+    return dot;
+  });
 
-    // Reanima el panel en cada cambio
-    panel.classList.remove("fade");
-    void panel.offsetWidth; // fuerza reflow para reiniciar la animación
-    panel.classList.add("fade");
-
-    img.closest(".panel-media").classList.remove("is-missing");
-    img.src = `assets/${fileName}`;
-    img.alt = `${PRODUCTS[product]} con el colibrí ${styleName} de Anaivi's`;
-    file.textContent = `assets/${fileName}`;
-    title.textContent = `${PRODUCTS[product]} · ${styleName}`;
-    desc.textContent = info.desc(styleName);
-    prompt.textContent = info.prompt;
+  function updateCarousel() {
+    track.style.transform = "translateX(" + -index * 100 + "%)";
+    dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
   }
+  function goTo(i) { index = (i + slides.length) % slides.length; updateCarousel(); }
+  const nextProd = () => goTo(index + 1);
+  const prevProd = () => goTo(index - 1);
 
-  function wire(tabs, onSelect) {
-    tabs.forEach((tab, i) => {
-      tab.addEventListener("click", () => {
-        tabs.forEach((t) => {
-          t.classList.toggle("is-active", t === tab);
-          t.setAttribute("aria-selected", t === tab ? "true" : "false");
-        });
-        onSelect(tab);
-      });
-      tab.addEventListener("keydown", (e) => {
-        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-        e.preventDefault();
-        const dir = e.key === "ArrowRight" ? 1 : -1;
-        const nextTab = tabs[(i + dir + tabs.length) % tabs.length];
-        nextTab.focus();
-        nextTab.click();
-      });
+  nextBtn.addEventListener("click", nextProd);
+  prevBtn.addEventListener("click", prevProd);
+
+  // Gesto táctil
+  let startX = 0, dragging = false;
+  const viewport = track.parentElement;
+  viewport.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; dragging = true; }, { passive: true });
+  viewport.addEventListener("touchend", (e) => {
+    if (!dragging) return;
+    dragging = false;
+    const delta = e.changedTouches[0].clientX - startX;
+    if (Math.abs(delta) > 40) (delta < 0 ? nextProd : prevProd)();
+  });
+
+  // --- Contenido de cada slide según el estilo activo ---
+  function renderStyle() {
+    const styleName = STYLES[style];
+    slides.forEach((slide) => {
+      const product = slide.dataset.product;
+      const info = PRODUCT_INFO[product];
+      const fileName = `${product}-${style}.png`;
+      const media = slide.querySelector(".panel-media");
+      const imgEl = slide.querySelector(".prod-img");
+
+      media.classList.remove("is-missing");
+      imgEl.src = `assets/${fileName}`;
+      imgEl.alt = `${PRODUCTS[product]} con el colibrí ${styleName} de Anaivi's`;
+      slide.querySelector(".prod-file").textContent = `assets/${fileName}`;
+      slide.querySelector(".prod-title").textContent = `${PRODUCTS[product]} · ${styleName}`;
+      slide.querySelector(".prod-desc").textContent = info.desc(styleName);
+      slide.querySelector(".prod-prompt").textContent = info.prompt;
     });
   }
 
-  wire(styleTabs, (tab) => { style = tab.dataset.style; render(); });
-  wire(productTabs, (tab) => { product = tab.dataset.product; render(); });
+  // --- Selector de estilo ---
+  styleTabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => {
+      style = tab.dataset.style;
+      styleTabs.forEach((t) => {
+        t.classList.toggle("is-active", t === tab);
+        t.setAttribute("aria-selected", t === tab ? "true" : "false");
+      });
+      renderStyle();
+    });
+    tab.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      e.preventDefault();
+      const dir = e.key === "ArrowRight" ? 1 : -1;
+      const nextTab = styleTabs[(i + dir + styleTabs.length) % styleTabs.length];
+      nextTab.focus();
+      nextTab.click();
+    });
+  });
 
-  render();
+  renderStyle();
+  updateCarousel();
 })();

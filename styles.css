@@ -348,9 +348,7 @@ body {
   color: #fff;
 }
 
-/* Panel */
-.panels { position: relative; margin-top: 1.5rem; }
-
+/* Panel (tarjeta de producto dentro del carrusel) */
 .panel {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -361,12 +359,9 @@ body {
   border: 1px solid rgba(200, 154, 106, 0.25);
   min-height: 360px;
 }
-.panel.fade { animation: fade-in 0.4s ease; }
 
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* Separa el carrusel de productos del selector de estilo */
+.carousel--products { margin-top: 1.5rem; padding: 0; }
 
 .panel-media {
   position: relative;
