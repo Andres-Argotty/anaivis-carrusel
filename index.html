@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anaivi's — Guardianes de Colombia · Propuesta de Carrusel</title>
+  <meta name="description" content="Propuesta de carrusel para Anaivi's: una misma plantilla de diseño aplicada con IA a diferentes productos, manteniendo el animal, la posición y el estilo hecho a mano." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Encabezado con identidad de marca -->
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-name">Anaivi's</span>
+      <span class="brand-tag">Hecho a mano</span>
+    </div>
+    <p class="kicker">Guardianes de Colombia</p>
+    <h1 class="headline">Una plantilla, muchos productos</h1>
+    <p class="subhead">
+      Presentamos cómo un mismo diseño —mismo animal, misma posición, mismo estilo
+      en acuarela— se adapta con IA a diferentes productos del emprendimiento.
+    </p>
+  </header>
+
+  <main>
+    <!-- Carrusel principal -->
+    <section class="carousel" aria-roledescription="carrusel" aria-label="Variantes del diseño del colibrí">
+      <div class="viewport">
+        <ul class="track" id="track">
+          <!-- Slide 0: la plantilla / diseño principal -->
+          <li class="slide" role="group" aria-roledescription="diapositiva" aria-label="1 de 4: Plantilla base">
+            <article class="card card--template">
+              <div class="card-media">
+                <img src="assets/plantilla-colibri.jpg"
+                     alt="Diseño base del colibrí de Anaivi's, en acuarela con detalles tricolor"
+                     loading="lazy"
+                     onerror="this.closest('.card-media').classList.add('is-missing')" />
+                <div class="media-fallback">
+                  <span>Coloca aquí<br /><code>assets/plantilla-colibri.jpg</code></span>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="eyebrow">Plantilla base</p>
+                <h2>El colibrí guardián</h2>
+                <p class="desc">
+                  El diseño original: colibrí en vuelo, detalles en verde esmeralda y
+                  franja tricolor, estilo acuarela hecho a mano. Esta es la base que se
+                  mantiene constante en todas las variantes.
+                </p>
+                <ul class="specs">
+                  <li><strong>Animal:</strong> Colibrí</li>
+                  <li><strong>Posición:</strong> Vuelo lateral, alas abiertas</li>
+                  <li><strong>Estilo:</strong> Acuarela · tricolor · artesanal</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- Slide 1: Cuaderno -->
+          <li class="slide" role="group" aria-roledescription="diapositiva" aria-label="2 de 4: Cuaderno">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/producto-cuaderno.jpg"
+                     alt="Cuaderno con el diseño del colibrí de Anaivi's"
+                     loading="lazy"
+                     onerror="this.closest('.card-media').classList.add('is-missing')" />
+                <div class="media-fallback">
+                  <span>Coloca aquí<br /><code>assets/producto-cuaderno.jpg</code></span>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="eyebrow">Variante 1</p>
+                <h2>Cuaderno artesanal</h2>
+                <p class="desc">
+                  El mismo colibrí trasladado a la portada de un cuaderno, respetando
+                  composición y paleta.
+                </p>
+                <div class="prompt">
+                  <p class="prompt-label">Indicación a la IA</p>
+                  <p class="prompt-text">
+                    "Mantén el colibrí en la misma posición y estilo acuarela; aplícalo
+                    sobre la portada de un cuaderno de tapa kraft, con los detalles del
+                    producto real."
+                  </p>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- Slide 2: Reloj -->
+          <li class="slide" role="group" aria-roledescription="diapositiva" aria-label="3 de 4: Reloj">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/producto-reloj.jpg"
+                     alt="Reloj de pared con el diseño del colibrí de Anaivi's"
+                     loading="lazy"
+                     onerror="this.closest('.card-media').classList.add('is-missing')" />
+                <div class="media-fallback">
+                  <span>Coloca aquí<br /><code>assets/producto-reloj.jpg</code></span>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="eyebrow">Variante 2</p>
+                <h2>Reloj de pared</h2>
+                <p class="desc">
+                  El colibrí adaptado a una superficie circular, integrando la esfera del
+                  reloj sin perder el diseño original.
+                </p>
+                <div class="prompt">
+                  <p class="prompt-label">Indicación a la IA</p>
+                  <p class="prompt-text">
+                    "Conserva el colibrí y su estilo; colócalo sobre un reloj de madera
+                    circular, con números y manecillas, integrando los colores de la marca."
+                  </p>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- Slide 3: Separador -->
+          <li class="slide" role="group" aria-roledescription="diapositiva" aria-label="4 de 4: Separador de libros">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/producto-separador.jpg"
+                     alt="Separador de libros con el diseño del colibrí de Anaivi's"
+                     loading="lazy"
+                     onerror="this.closest('.card-media').classList.add('is-missing')" />
+                <div class="media-fallback">
+                  <span>Coloca aquí<br /><code>assets/producto-separador.jpg</code></span>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="eyebrow">Variante 3</p>
+                <h2>Separador de libros</h2>
+                <p class="desc">
+                  El mismo colibrí en formato vertical alargado, ideal para un separador,
+                  manteniendo identidad y detalles.
+                </p>
+                <div class="prompt">
+                  <p class="prompt-label">Indicación a la IA</p>
+                  <p class="prompt-text">
+                    "Reubica el colibrí en un formato vertical estrecho de separador de
+                    libros, mismo estilo y colores, con remate artesanal."
+                  </p>
+                </div>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Controles -->
+      <button class="nav nav--prev" id="prev" aria-label="Diapositiva anterior">&#8249;</button>
+      <button class="nav nav--next" id="next" aria-label="Diapositiva siguiente">&#8250;</button>
+
+      <!-- Puntos de navegación -->
+      <div class="dots" id="dots" role="tablist" aria-label="Seleccionar diapositiva"></div>
+    </section>
+
+    <!-- Nota explicativa de la propuesta -->
+    <section class="note">
+      <h3>Sobre esta propuesta</h3>
+      <p>
+        La idea es partir de <strong>una sola plantilla</strong> y mostrar, con ayuda de
+        IA, los posibles resultados al aplicarla a distintos productos. El animal
+        principal, su posición y el estilo <em>hecho a mano</em> se mantienen; la IA solo
+        ajusta los detalles del producto a partir de fotos reales.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Anaivi's · Hecho a mano · Guardianes de Colombia</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

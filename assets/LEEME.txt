@@ -1,0 +1,16 @@
+IMÁGENES DEL CARRUSEL — Anaivi's
+=================================
+
+Coloca aquí tus imágenes con EXACTAMENTE estos nombres para que
+aparezcan en el carrusel automáticamente:
+
+  1. plantilla-colibri.jpg     -> El diseño base del colibrí (la plantilla)
+  2. producto-cuaderno.jpg      -> El colibrí aplicado al cuaderno
+  3. producto-reloj.jpg         -> El colibrí aplicado al reloj
+  4. producto-separador.jpg     -> El colibrí aplicado al separador
+
+Notas:
+- Pueden ser .jpg o .png, pero si usas .png cambia la extensión en index.html.
+- Mientras no existan, el carrusel muestra un marcador elegante en cada slide.
+- Tamaño recomendado: imágenes más o menos cuadradas o verticales, mínimo 800px.
+- Las fotos que generes con IA (variantes de productos) van en los 2, 3 y 4.
