@@ -3,7 +3,7 @@
 Página web de presentación (estática) para el emprendimiento **Anaivi's — Hecho a mano**.
 
 Muestra un **carrusel** donde una misma plantilla de diseño (el colibrí guardián, en
-acuarela con detalles tricolor) se adapta con IA a diferentes productos, manteniendo el
+acuarela con cinta tricolor) se reinterpreta con IA en distintas paletas, manteniendo el
 animal, la posición y el estilo artesanal.
 
 ## Estructura
@@ -22,10 +22,9 @@ Las imágenes se generan con IA y se colocan en `assets/` con estos nombres exac
 
 | Archivo | Contenido |
 |---|---|
-| `plantilla-colibri.jpg` | El diseño base del colibrí |
-| `producto-cuaderno.jpg` | Colibrí aplicado al cuaderno |
-| `producto-reloj.jpg` | Colibrí aplicado al reloj |
-| `producto-separador.jpg` | Colibrí aplicado al separador |
+| `colibri-tricolor.jpg` | Colibrí verde con cinta tricolor (plantilla base) |
+| `colibri-multicolor.jpg` | Colibrí en púrpura/azul/magenta |
+| `colibri-flor.jpg` | Colibrí azul y naranja con flor de hibisco |
 
 Mientras no existan, el carrusel muestra un marcador en cada slide, así que la página
 funciona igual.
