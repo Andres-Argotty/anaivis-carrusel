@@ -65,36 +65,93 @@
 
 // Selector de productos — muestra un panel a la vez según el botón activo.
 (function () {
-  const tabs = Array.from(document.querySelectorAll("#productTabs .tab"));
-  const panels = Array.from(document.querySelectorAll("#productPanels .panel"));
-  if (!tabs.length || !panels.length) return;
+  const styleTabs = Array.from(document.querySelectorAll("#styleTabs .tab"));
+  const productTabs = Array.from(document.querySelectorAll("#productTabs .tab"));
+  const img = document.getElementById("comboImg");
+  const file = document.getElementById("comboFile");
+  const title = document.getElementById("comboTitle");
+  const desc = document.getElementById("comboDesc");
+  const prompt = document.getElementById("comboPrompt");
+  const panel = document.getElementById("comboPanel");
+  if (!styleTabs.length || !productTabs.length || !img) return;
 
-  function select(product) {
-    tabs.forEach((t) => {
-      const active = t.dataset.product === product;
-      t.classList.toggle("is-active", active);
-      t.setAttribute("aria-selected", active ? "true" : "false");
-    });
-    panels.forEach((p) => {
-      const active = p.dataset.product === product;
-      p.classList.toggle("is-active", active);
-      p.hidden = !active;
+  // Nombres legibles por producto y estilo
+  const PRODUCTS = {
+    cuaderno: "Cuaderno",
+    camisa: "Camisa",
+    reloj: "Reloj",
+    separador: "Separador de libros",
+  };
+  const STYLES = { multicolor: "multicolor", flor: "con flor" };
+
+  // Descripción y prompt por producto (el estilo se inserta dinámicamente)
+  const PRODUCT_INFO = {
+    cuaderno: {
+      desc: (s) => `El colibrí ${s} sobre la portada de un cuaderno artesanal.`,
+      prompt:
+        '"Usa este colibrí exacto (misma pose, colores y estilo acuarela) impreso sobre la portada de un cuaderno de tapa kraft. Mockup realista, fondo neutro."',
+    },
+    camisa: {
+      desc: (s) => `El colibrí ${s} estampado al frente de una camiseta.`,
+      prompt:
+        '"Usa este colibrí exacto (misma pose, colores y estilo acuarela) estampado al frente de una camiseta blanca. Mockup de prenda realista, fondo neutro."',
+    },
+    reloj: {
+      desc: (s) => `El colibrí ${s} integrado en un reloj de pared circular de madera.`,
+      prompt:
+        '"Usa este colibrí exacto (misma pose, colores y estilo acuarela) sobre un reloj de pared circular de madera, con números y manecillas. Mockup realista."',
+    },
+    separador: {
+      desc: (s) => `El colibrí ${s} en un separador de libros vertical alargado.`,
+      prompt:
+        '"Usa este colibrí exacto (misma pose, colores y estilo acuarela) en un separador de libros vertical y estrecho, con remate artesanal. Mockup realista."',
+    },
+  };
+
+  let style = "multicolor";
+  let product = "cuaderno";
+
+  function render() {
+    const fileName = `${product}-${style}.png`;
+    const info = PRODUCT_INFO[product];
+    const styleName = STYLES[style];
+
+    // Reanima el panel en cada cambio
+    panel.classList.remove("fade");
+    void panel.offsetWidth; // fuerza reflow para reiniciar la animación
+    panel.classList.add("fade");
+
+    img.closest(".panel-media").classList.remove("is-missing");
+    img.src = `assets/${fileName}`;
+    img.alt = `${PRODUCTS[product]} con el colibrí ${styleName} de Anaivi's`;
+    file.textContent = `assets/${fileName}`;
+    title.textContent = `${PRODUCTS[product]} · ${styleName}`;
+    desc.textContent = info.desc(styleName);
+    prompt.textContent = info.prompt;
+  }
+
+  function wire(tabs, onSelect) {
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => {
+          t.classList.toggle("is-active", t === tab);
+          t.setAttribute("aria-selected", t === tab ? "true" : "false");
+        });
+        onSelect(tab);
+      });
+      tab.addEventListener("keydown", (e) => {
+        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+        e.preventDefault();
+        const dir = e.key === "ArrowRight" ? 1 : -1;
+        const nextTab = tabs[(i + dir + tabs.length) % tabs.length];
+        nextTab.focus();
+        nextTab.click();
+      });
     });
   }
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => select(tab.dataset.product));
-  });
+  wire(styleTabs, (tab) => { style = tab.dataset.style; render(); });
+  wire(productTabs, (tab) => { product = tab.dataset.product; render(); });
 
-  // Navegación con teclado entre los botones (flechas)
-  tabs.forEach((tab, i) => {
-    tab.addEventListener("keydown", (e) => {
-      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-      e.preventDefault();
-      const dir = e.key === "ArrowRight" ? 1 : -1;
-      const next = tabs[(i + dir + tabs.length) % tabs.length];
-      next.focus();
-      select(next.dataset.product);
-    });
-  });
+  render();
 })();

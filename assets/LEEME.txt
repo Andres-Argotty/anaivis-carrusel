@@ -1,23 +1,32 @@
 IMÁGENES — Anaivi's
 ===================
 
-Coloca aquí tus imágenes con EXACTAMENTE estos nombres (todo en minúsculas)
-para que aparezcan automáticamente. GitHub Pages distingue mayúsculas.
+Coloca aquí tus imágenes con EXACTAMENTE estos nombres (todo en minúsculas).
+GitHub Pages distingue mayúsculas de minúsculas.
 
-VARIANTES DE ESTILO (carrusel):
-  1. colibri-tricolor.png    -> Colibrí verde con cinta tricolor (plantilla base)
-  2. colibri-multicolor.png  -> Colibrí en púrpura/azul/magenta
-  3. colibri-flor.png        -> Colibrí azul y naranja con flor de hibisco
+VARIANTES DE ESTILO (carrusel — Paso 1):
+  colibri-tricolor.png    -> Colibrí verde con cinta tricolor
+  colibri-multicolor.png  -> Colibrí en púrpura/azul/magenta
+  colibri-flor.png        -> Colibrí azul y naranja con flor de hibisco
 
-PRODUCTOS (galería):
-  4. producto-cuaderno.png   -> Colibrí sobre un cuaderno
-  5. producto-camisa.png     -> Colibrí estampado en una camisa
-  6. producto-reloj.png      -> Colibrí en un reloj de pared
-  7. producto-separador.png  -> Colibrí en un separador de libros
+PRODUCTOS × ESTILO (selector — Paso 2):
+  El nombre es  <producto>-<estilo>.png
+
+  Estilo MULTICOLOR:
+    cuaderno-multicolor.png
+    camisa-multicolor.png
+    reloj-multicolor.png
+    separador-multicolor.png
+
+  Estilo CON FLOR:
+    cuaderno-flor.png
+    camisa-flor.png
+    reloj-flor.png
+    separador-flor.png
 
 Notas:
-- Los nombres deben coincidir EXACTAMENTE (incluida la extensión .png).
-- Mientras no existan, cada espacio muestra un marcador "Coloca aquí".
-- Para generarlas: sube tu colibrí como referencia a la IA y pídele que lo
-  coloque sobre el producto (los prompts están escritos en la propia página).
-- Recomendado: comprime los PNG o usa .jpg para que pesen menos.
+- Si una combinación no tiene imagen, el panel muestra "Falta la imagen".
+- Para añadir el estilo "tricolor" a productos en el futuro: sube
+  cuaderno-tricolor.png, camisa-tricolor.png, etc. y avísame para
+  agregar el botón del estilo en la página.
+- Recomendado: comprime los PNG o usa .jpg/.webp para que pesen menos.
