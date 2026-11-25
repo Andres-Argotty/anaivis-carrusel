@@ -4,29 +4,34 @@ IMÁGENES — Anaivi's
 Coloca aquí tus imágenes con EXACTAMENTE estos nombres (todo en minúsculas).
 GitHub Pages distingue mayúsculas de minúsculas.
 
-VARIANTES DE ESTILO (carrusel — Paso 1):
+VARIANTES DE ESTILO (carrusel — Paso 1 de la página):
   colibri-tricolor.png    -> Colibrí verde con cinta tricolor
   colibri-multicolor.png  -> Colibrí en púrpura/azul/magenta
   colibri-flor.png        -> Colibrí azul y naranja con flor de hibisco
 
-PRODUCTOS × ESTILO (selector — Paso 2):
-  El nombre es  <producto>-<estilo>.png
+PASO A PASO POR PRODUCTO (sección "El colibrí en productos"):
+
+  Cada producto muestra 3 pasos:
+    Paso 1 (Plantilla)      -> reutiliza colibri-<estilo>.png (NO hay que generarlo)
+    Paso 2 (Adaptación)     -> <producto>-<estilo>-paso2.png
+    Paso 3 (Producto final) -> <producto>-<estilo>-paso3.png
+
+  Imágenes a generar (16 en total = 4 productos x 2 estilos x pasos 2 y 3):
 
   Estilo MULTICOLOR:
-    cuaderno-multicolor.png
-    camisa-multicolor.png
-    reloj-multicolor.png
-    separador-multicolor.png
+    cuaderno-multicolor-paso2.png     cuaderno-multicolor-paso3.png
+    camisa-multicolor-paso2.png       camisa-multicolor-paso3.png
+    reloj-multicolor-paso2.png        reloj-multicolor-paso3.png
+    separador-multicolor-paso2.png    separador-multicolor-paso3.png
 
   Estilo CON FLOR:
-    cuaderno-flor.png
-    camisa-flor.png
-    reloj-flor.png
-    separador-flor.png
+    cuaderno-flor-paso2.png           cuaderno-flor-paso3.png
+    camisa-flor-paso2.png             camisa-flor-paso3.png
+    reloj-flor-paso2.png              reloj-flor-paso3.png
+    separador-flor-paso2.png          separador-flor-paso3.png
 
 Notas:
-- Si una combinación no tiene imagen, el panel muestra "Falta la imagen".
-- Para añadir el estilo "tricolor" a productos en el futuro: sube
-  cuaderno-tricolor.png, camisa-tricolor.png, etc. y avísame para
-  agregar el botón del estilo en la página.
+- Mientras no exista una imagen, ese paso muestra "Falta la imagen".
+- El paso 3 puede ser la imagen final que ya tenías (p.ej. renombra
+  cuaderno-multicolor.png -> cuaderno-multicolor-paso3.png), o una nueva.
 - Recomendado: comprime los PNG o usa .jpg/.webp para que pesen menos.

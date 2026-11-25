@@ -86,32 +86,40 @@
   };
   const STYLES = { multicolor: "multicolor", flor: "con flor" };
 
-  // Descripción y prompt por producto (el estilo se inserta dinámicamente)
-  const PRODUCT_INFO = {
-    cuaderno: {
-      desc: (s) => `El colibrí ${s} sobre la portada de un cuaderno artesanal.`,
-      prompt:
-        '"Usa este colibrí exacto (misma pose, colores y estilo acuarela) impreso sobre la portada de un cuaderno de tapa kraft. Mockup realista, fondo neutro."',
-    },
-    camisa: {
-      desc: (s) => `El colibrí ${s} estampado al frente de una camiseta.`,
-      prompt:
-        '"Usa este colibrí exacto (misma pose, colores y estilo acuarela) estampado al frente de una camiseta blanca. Mockup de prenda realista, fondo neutro."',
-    },
-    reloj: {
-      desc: (s) => `El colibrí ${s} integrado en un reloj de pared circular de madera.`,
-      prompt:
-        '"Usa este colibrí exacto (misma pose, colores y estilo acuarela) sobre un reloj de pared circular de madera, con números y manecillas. Mockup realista."',
-    },
-    separador: {
-      desc: (s) => `El colibrí ${s} en un separador de libros vertical alargado.`,
-      prompt:
-        '"Usa este colibrí exacto (misma pose, colores y estilo acuarela) en un separador de libros vertical y estrecho, con remate artesanal. Mockup realista."',
-    },
+  // Etiquetas cortas del producto para redactar cada paso.
+  const PRODUCT_NOUN = {
+    cuaderno: "el cuaderno",
+    camisa: "la camiseta",
+    reloj: "el reloj",
+    separador: "el separador",
   };
+
+  // Los 3 pasos del paso a paso. `file` devuelve el nombre del archivo
+  // según producto y estilo; `desc` el texto del paso.
+  // Paso 1 reutiliza el colibrí base (colibri-<estilo>.png).
+  const STEPS = [
+    {
+      label: "Plantilla",
+      file: (p, s) => `colibri-${s}.png`,
+      desc: (p, s) => `El diseño base: el colibrí ${STYLES[s]}, en acuarela hecho a mano.`,
+    },
+    {
+      label: "Adaptación",
+      file: (p, s) => `${p}-${s}-paso2.png`,
+      desc: (p, s) => `El colibrí se ajusta y posiciona para ${PRODUCT_NOUN[p]}, tomando detalles.`,
+    },
+    {
+      label: "Producto final",
+      file: (p, s) => `${p}-${s}-paso3.png`,
+      desc: (p, s) => `El resultado: ${PRODUCT_NOUN[p]} con el colibrí ${STYLES[s]} aplicado.`,
+    },
+  ];
+  const TOTAL_STEPS = STEPS.length;
 
   let style = "multicolor";
   let index = 0;
+  // Paso actual de cada slide (independiente por producto).
+  const stepOf = slides.map(() => 0);
 
   // --- Carrusel de productos ---
   const dots = slides.map((_, i) => {
@@ -146,24 +154,59 @@
     if (Math.abs(delta) > 40) (delta < 0 ? nextProd : prevProd)();
   });
 
-  // --- Contenido de cada slide según el estilo activo ---
-  function renderStyle() {
-    const styleName = STYLES[style];
-    slides.forEach((slide) => {
-      const product = slide.dataset.product;
-      const info = PRODUCT_INFO[product];
-      const fileName = `${product}-${style}.png`;
-      const media = slide.querySelector(".panel-media");
-      const imgEl = slide.querySelector(".prod-img");
-
-      media.classList.remove("is-missing");
-      imgEl.src = `assets/${fileName}`;
-      imgEl.alt = `${PRODUCTS[product]} con el colibrí ${styleName} de Anaivi's`;
-      slide.querySelector(".prod-file").textContent = `assets/${fileName}`;
-      slide.querySelector(".prod-title").textContent = `${PRODUCTS[product]} · ${styleName}`;
-      slide.querySelector(".prod-desc").textContent = info.desc(styleName);
-      slide.querySelector(".prod-prompt").textContent = info.prompt;
+  // Construye los puntos del stepper (1-2-3) una sola vez por slide.
+  slides.forEach((slide, si) => {
+    const stepper = slide.querySelector(".stepper");
+    STEPS.forEach((st, i) => {
+      const li = document.createElement("li");
+      li.className = "step-item";
+      li.innerHTML = `<span class="step-dot">${i + 1}</span><span class="step-label">${st.label}</span>`;
+      li.addEventListener("click", () => { stepOf[si] = i; renderSlide(si); });
+      stepper.appendChild(li);
     });
+  });
+
+  // Dibuja un slide según su producto, el estilo activo y su paso actual.
+  function renderSlide(si) {
+    const slide = slides[si];
+    const product = slide.dataset.product;
+    const stepIdx = stepOf[si];
+    const step = STEPS[stepIdx];
+    const fileName = step.file(product, style);
+    const media = slide.querySelector(".panel-media");
+    const imgEl = slide.querySelector(".prod-img");
+
+    media.classList.remove("is-missing");
+    imgEl.src = `assets/${fileName}`;
+    imgEl.alt = `${PRODUCTS[product]} — paso ${stepIdx + 1}: ${step.label}`;
+    slide.querySelector(".prod-file").textContent = `assets/${fileName}`;
+    slide.querySelector(".prod-title").textContent = `${PRODUCTS[product]} · ${STYLES[style]}`;
+    slide.querySelector(".prod-desc").textContent = step.desc(product, style);
+    slide.querySelector(".prod-count").textContent = `Paso ${stepIdx + 1} de ${TOTAL_STEPS}`;
+
+    // Estado del stepper (activo / completado)
+    slide.querySelectorAll(".step-item").forEach((li, i) => {
+      li.classList.toggle("is-active", i === stepIdx);
+      li.classList.toggle("is-done", i < stepIdx);
+    });
+    // Habilitar/deshabilitar botones de paso
+    slide.querySelector(".prod-prev").disabled = stepIdx === 0;
+    slide.querySelector(".prod-next").disabled = stepIdx === TOTAL_STEPS - 1;
+  }
+
+  // Conecta los botones de paso de cada slide.
+  slides.forEach((slide, si) => {
+    slide.querySelector(".prod-prev").addEventListener("click", () => {
+      if (stepOf[si] > 0) { stepOf[si]--; renderSlide(si); }
+    });
+    slide.querySelector(".prod-next").addEventListener("click", () => {
+      if (stepOf[si] < TOTAL_STEPS - 1) { stepOf[si]++; renderSlide(si); }
+    });
+  });
+
+  // Redibuja todos los slides (p. ej. al cambiar de estilo).
+  function renderStyle() {
+    slides.forEach((_, si) => renderSlide(si));
   }
 
   // --- Selector de estilo ---
