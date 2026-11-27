@@ -52,17 +52,34 @@ body {
   margin: 0 auto;
 }
 
+/* Marca: por defecto muestra el logo (imagen). Si la imagen falla,
+   se añade .no-logo y se cae al marco circular con texto. */
 .brand {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
+}
+
+.brand-logo {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--sombra);
+  display: block;
+}
+
+/* Texto del logo: oculto cuando hay imagen */
+.brand-name,
+.brand-tag { display: none; }
+
+/* Fallback sin logo: marco circular vibrante + texto */
+.brand.no-logo {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: #fff;
-  /* Marco circular con la paleta vibrante (evoca el logo floral) */
   border: 6px solid transparent;
   background-image:
     linear-gradient(#fff, #fff),
@@ -77,16 +94,17 @@ body {
   background-clip: padding-box, border-box;
   box-shadow: var(--sombra);
 }
-
-.brand-name {
+.brand.no-logo .brand-logo { display: none; }
+.brand.no-logo .brand-name {
+  display: block;
   font-family: "Caveat", cursive;
   font-size: 2.2rem;
   font-weight: 700;
   color: var(--tinta);
   line-height: 1;
 }
-
-.brand-tag {
+.brand.no-logo .brand-tag {
+  display: block;
   font-family: "Caveat", cursive;
   font-size: 1rem;
   color: var(--kraft-oscuro);
@@ -402,7 +420,7 @@ body {
 }
 
 /* Separa el carrusel de productos del selector de estilo */
-.carousel--products { margin-top: 1.5rem; padding: 0; }
+.selector .panels { margin-top: 1.5rem; }
 
 .panel-media {
   position: relative;

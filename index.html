@@ -14,6 +14,8 @@
   <!-- Encabezado con identidad de marca -->
   <header class="site-header">
     <div class="brand">
+      <img class="brand-logo" src="assets/logo-anaivis.png" alt="Anaivi's — Hecho a mano"
+           onerror="this.closest('.brand').classList.add('no-logo')" />
       <span class="brand-name">Anaivi's</span>
       <span class="brand-tag">Hecho a mano</span>
     </div>
@@ -150,18 +152,18 @@
       </p>
     </section>
 
-    <!-- Sección 2: productos -->
+    <!-- Sección 2: proceso por capas de serigrafía -->
     <div class="section-head">
       <p class="section-eyebrow">Paso 2</p>
-      <h2 class="section-title">El colibrí en productos</h2>
+      <h2 class="section-title">El proceso por capas</h2>
       <p class="section-intro">
-        Elige un <strong>estilo</strong> y recorre los productos en el carrusel. En cada
-        uno verás el <strong>paso a paso</strong>: cómo la plantilla del colibrí va
-        adquiriendo detalles hasta convertirse en el producto.
+        Elige un <strong>estilo</strong> y recorre el <strong>paso a paso</strong> de la
+        serigrafía: cómo el colibrí se construye capa sobre capa, desde el soporte hasta
+        las capas intermedias de color.
       </p>
     </div>
 
-    <section class="selector" aria-label="Productos por estilo">
+    <section class="selector" aria-label="Proceso por capas según el estilo">
       <!-- Selector de estilo -->
       <div class="selector-row">
         <span class="selector-label">Estilo</span>
@@ -175,92 +177,25 @@
         </div>
       </div>
 
-      <!-- Carrusel de productos (las imágenes dependen del estilo elegido) -->
-      <div class="carousel carousel--products">
-        <div class="viewport">
-          <ul class="track" id="prodTrack">
-            <li class="slide" role="group" aria-roledescription="diapositiva" data-product="cuaderno">
-              <article class="panel">
-                <div class="panel-media">
-                  <img class="prod-img" src="" alt=""
-                       onerror="this.closest('.panel-media').classList.add('is-missing')" />
-                  <div class="media-fallback"><span>Falta la imagen<br /><code class="prod-file"></code></span></div>
-                </div>
-                <div class="panel-body">
-                  <h3 class="prod-title"></h3>
-                  <ol class="stepper" aria-label="Pasos del diseño"></ol>
-                  <p class="desc prod-desc"></p>
-                  <div class="step-nav">
-                    <button type="button" class="step-btn prod-prev">&#8249; Paso anterior</button>
-                    <span class="step-count prod-count"></span>
-                    <button type="button" class="step-btn prod-next">Siguiente paso &#8250;</button>
-                  </div>
-                </div>
-              </article>
-            </li>
-            <li class="slide" role="group" aria-roledescription="diapositiva" data-product="camisa">
-              <article class="panel">
-                <div class="panel-media">
-                  <img class="prod-img" src="" alt=""
-                       onerror="this.closest('.panel-media').classList.add('is-missing')" />
-                  <div class="media-fallback"><span>Falta la imagen<br /><code class="prod-file"></code></span></div>
-                </div>
-                <div class="panel-body">
-                  <h3 class="prod-title"></h3>
-                  <ol class="stepper" aria-label="Pasos del diseño"></ol>
-                  <p class="desc prod-desc"></p>
-                  <div class="step-nav">
-                    <button type="button" class="step-btn prod-prev">&#8249; Paso anterior</button>
-                    <span class="step-count prod-count"></span>
-                    <button type="button" class="step-btn prod-next">Siguiente paso &#8250;</button>
-                  </div>
-                </div>
-              </article>
-            </li>
-            <li class="slide" role="group" aria-roledescription="diapositiva" data-product="reloj">
-              <article class="panel">
-                <div class="panel-media">
-                  <img class="prod-img" src="" alt=""
-                       onerror="this.closest('.panel-media').classList.add('is-missing')" />
-                  <div class="media-fallback"><span>Falta la imagen<br /><code class="prod-file"></code></span></div>
-                </div>
-                <div class="panel-body">
-                  <h3 class="prod-title"></h3>
-                  <ol class="stepper" aria-label="Pasos del diseño"></ol>
-                  <p class="desc prod-desc"></p>
-                  <div class="step-nav">
-                    <button type="button" class="step-btn prod-prev">&#8249; Paso anterior</button>
-                    <span class="step-count prod-count"></span>
-                    <button type="button" class="step-btn prod-next">Siguiente paso &#8250;</button>
-                  </div>
-                </div>
-              </article>
-            </li>
-            <li class="slide" role="group" aria-roledescription="diapositiva" data-product="separador">
-              <article class="panel">
-                <div class="panel-media">
-                  <img class="prod-img" src="" alt=""
-                       onerror="this.closest('.panel-media').classList.add('is-missing')" />
-                  <div class="media-fallback"><span>Falta la imagen<br /><code class="prod-file"></code></span></div>
-                </div>
-                <div class="panel-body">
-                  <h3 class="prod-title"></h3>
-                  <ol class="stepper" aria-label="Pasos del diseño"></ol>
-                  <p class="desc prod-desc"></p>
-                  <div class="step-nav">
-                    <button type="button" class="step-btn prod-prev">&#8249; Paso anterior</button>
-                    <span class="step-count prod-count"></span>
-                    <button type="button" class="step-btn prod-next">Siguiente paso &#8250;</button>
-                  </div>
-                </div>
-              </article>
-            </li>
-          </ul>
-        </div>
-
-        <button class="nav nav--prev" id="prodPrev" aria-label="Producto anterior">&#8249;</button>
-        <button class="nav nav--next" id="prodNext" aria-label="Producto siguiente">&#8250;</button>
-        <div class="dots" id="prodDots" role="tablist" aria-label="Seleccionar producto"></div>
+      <!-- Stepper único de 4 pasos (las imágenes dependen del estilo) -->
+      <div class="panels">
+        <article class="panel" id="layerPanel">
+          <div class="panel-media">
+            <img class="layer-img" src="" alt=""
+                 onerror="this.closest('.panel-media').classList.add('is-missing')" />
+            <div class="media-fallback"><span>Falta la imagen<br /><code class="layer-file"></code></span></div>
+          </div>
+          <div class="panel-body">
+            <h3 class="layer-title"></h3>
+            <ol class="stepper" aria-label="Pasos del proceso por capas"></ol>
+            <p class="desc layer-desc"></p>
+            <div class="step-nav">
+              <button type="button" class="step-btn layer-prev">&#8249; Capa anterior</button>
+              <span class="step-count layer-count"></span>
+              <button type="button" class="step-btn layer-next">Siguiente capa &#8250;</button>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   </main>

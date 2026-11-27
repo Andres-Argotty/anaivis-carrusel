@@ -4,34 +4,36 @@ IMÁGENES — Anaivi's
 Coloca aquí tus imágenes con EXACTAMENTE estos nombres (todo en minúsculas).
 GitHub Pages distingue mayúsculas de minúsculas.
 
+LOGO:
+  logo-anaivis.png  -> Logo circular floral (encabezado)
+
 VARIANTES DE ESTILO (carrusel — Paso 1 de la página):
   colibri-tricolor.png    -> Colibrí verde con cinta tricolor
   colibri-multicolor.png  -> Colibrí en púrpura/azul/magenta
   colibri-flor.png        -> Colibrí azul y naranja con flor de hibisco
 
-PASO A PASO POR PRODUCTO (sección "El colibrí en productos"):
+PROCESO POR CAPAS DE SERIGRAFÍA (sección "El proceso por capas"):
 
-  Cada producto muestra 3 pasos:
-    Paso 1 (Plantilla)      -> reutiliza colibri-<estilo>.png (NO hay que generarlo)
-    Paso 2 (Adaptación)     -> <producto>-<estilo>-paso2.png
-    Paso 3 (Producto final) -> <producto>-<estilo>-paso3.png
-
-  Imágenes a generar (16 en total = 4 productos x 2 estilos x pasos 2 y 3):
+  4 pasos, las imágenes dependen del ESTILO (no del producto):
+    Paso 1 (Preparación del soporte)  -> capa-<estilo>-paso1.png
+    Paso 2 (Capa base / silueta)      -> capa-<estilo>-paso2.png
+    Paso 3 (Primera capa de color)    -> capa-<estilo>-paso3.png
+    Paso 4 (Capas intermedias)        -> capa-<estilo>-paso4.png
 
   Estilo MULTICOLOR:
-    cuaderno-multicolor-paso2.png     cuaderno-multicolor-paso3.png
-    camisa-multicolor-paso2.png       camisa-multicolor-paso3.png
-    reloj-multicolor-paso2.png        reloj-multicolor-paso3.png
-    separador-multicolor-paso2.png    separador-multicolor-paso3.png
+    capa-multicolor-paso1.png
+    capa-multicolor-paso2.png
+    capa-multicolor-paso3.png
+    capa-multicolor-paso4.png
 
   Estilo CON FLOR:
-    cuaderno-flor-paso2.png           cuaderno-flor-paso3.png
-    camisa-flor-paso2.png             camisa-flor-paso3.png
-    reloj-flor-paso2.png              reloj-flor-paso3.png
-    separador-flor-paso2.png          separador-flor-paso3.png
+    capa-flor-paso1.png
+    capa-flor-paso2.png
+    capa-flor-paso3.png
+    capa-flor-paso4.png
 
 Notas:
+- Me pasaste 3 imágenes por estilo -> van a los pasos 2, 3 y 4.
+- El paso 1 (soporte en blanco) queda como marcador hasta que subas esa imagen.
 - Mientras no exista una imagen, ese paso muestra "Falta la imagen".
-- El paso 3 puede ser la imagen final que ya tenías (p.ej. renombra
-  cuaderno-multicolor.png -> cuaderno-multicolor-paso3.png), o una nueva.
 - Recomendado: comprime los PNG o usa .jpg/.webp para que pesen menos.

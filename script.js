@@ -40,7 +40,7 @@
   // selector de estilo u otro carrusel), para no mover este carrusel por error.
   document.addEventListener("keydown", (e) => {
     const el = document.activeElement;
-    if (el && el.closest && el.closest("button, .selector, .carousel--products")) return;
+    if (el && el.closest && el.closest("button, .selector")) return;
     if (e.key === "ArrowRight") next();
     if (e.key === "ArrowLeft") prev();
   });
@@ -67,147 +67,97 @@
   update();
 })();
 
-// Selector de productos — muestra un panel a la vez según el botón activo.
+// Proceso por capas de serigrafía — stepper único de 4 pasos.
+// Las imágenes dependen del ESTILO (no del producto).
 (function () {
   const styleTabs = Array.from(document.querySelectorAll("#styleTabs .tab"));
-  const track = document.getElementById("prodTrack");
-  if (!styleTabs.length || !track) return;
+  const panel = document.getElementById("layerPanel");
+  if (!styleTabs.length || !panel) return;
 
-  const slides = Array.from(track.children);
-  const prevBtn = document.getElementById("prodPrev");
-  const nextBtn = document.getElementById("prodNext");
-  const dotsContainer = document.getElementById("prodDots");
+  const stepper = panel.querySelector(".stepper");
+  const imgEl = panel.querySelector(".layer-img");
+  const media = panel.querySelector(".panel-media");
+  const titleEl = panel.querySelector(".layer-title");
+  const descEl = panel.querySelector(".layer-desc");
+  const countEl = panel.querySelector(".layer-count");
+  const prevBtn = panel.querySelector(".layer-prev");
+  const nextBtn = panel.querySelector(".layer-next");
 
-  const PRODUCTS = {
-    cuaderno: "Cuaderno",
-    camisa: "Camisa",
-    reloj: "Reloj",
-    separador: "Separador de libros",
-  };
   const STYLES = { multicolor: "multicolor", flor: "con flor" };
 
-  // Etiquetas cortas del producto para redactar cada paso.
-  const PRODUCT_NOUN = {
-    cuaderno: "el cuaderno",
-    camisa: "la camiseta",
-    reloj: "el reloj",
-    separador: "el separador",
-  };
-
-  // Los 3 pasos del paso a paso. `file` devuelve el nombre del archivo
-  // según producto y estilo; `desc` el texto del paso.
-  // Paso 1 reutiliza el colibrí base (colibri-<estilo>.png).
+  // Los 4 pasos del proceso por capas. `file` depende solo del estilo.
   const STEPS = [
     {
-      label: "Plantilla",
-      file: (p, s) => `colibri-${s}.png`,
-      desc: (p, s) => `El diseño base: el colibrí ${STYLES[s]}, en acuarela hecho a mano.`,
+      label: "Preparación del soporte",
+      file: (s) => `capa-${s}-paso1.png`,
+      desc: () => "El textil o superficie listo para recibir la primera capa de serigrafía.",
     },
     {
-      label: "Adaptación",
-      file: (p, s) => `${p}-${s}-paso2.png`,
-      desc: (p, s) => `El colibrí se ajusta y posiciona para ${PRODUCT_NOUN[p]}, tomando detalles.`,
+      label: "Capa base (silueta)",
+      file: (s) => `capa-${s}-paso2.png`,
+      desc: () => "La silueta del colibrí: la primera capa que define la forma.",
     },
     {
-      label: "Producto final",
-      file: (p, s) => `${p}-${s}-paso3.png`,
-      desc: (p, s) => `El resultado: ${PRODUCT_NOUN[p]} con el colibrí ${STYLES[s]} aplicado.`,
+      label: "Primera capa de color",
+      file: (s) => `capa-${s}-paso3.png`,
+      desc: () => "Sobre la silueta se aplica la primera capa de color del diseño.",
+    },
+    {
+      label: "Capas intermedias",
+      file: (s) => `capa-${s}-paso4.png`,
+      desc: () => "Se suman las capas intermedias que dan volumen y riqueza de color.",
     },
   ];
-  const TOTAL_STEPS = STEPS.length;
+  const TOTAL = STEPS.length;
 
   let style = "multicolor";
-  let index = 0;
-  // Paso actual de cada slide (independiente por producto).
-  const stepOf = slides.map(() => 0);
+  let stepIdx = 0;
 
-  // --- Carrusel de productos ---
-  const dots = slides.map((_, i) => {
-    const dot = document.createElement("button");
-    dot.className = "dot" + (i === 0 ? " is-active" : "");
-    dot.setAttribute("role", "tab");
-    dot.setAttribute("aria-label", "Ir al producto " + (i + 1));
-    dot.addEventListener("click", () => goTo(i));
-    dotsContainer.appendChild(dot);
-    return dot;
+  // Construye los puntos del stepper (1-2-3-4) una sola vez.
+  STEPS.forEach((st, i) => {
+    const li = document.createElement("li");
+    li.className = "step-item";
+    li.innerHTML = `<span class="step-dot">${i + 1}</span><span class="step-label">${st.label}</span>`;
+    li.addEventListener("click", () => { stepIdx = i; render(); });
+    stepper.appendChild(li);
   });
 
-  function updateCarousel() {
-    track.style.transform = "translateX(" + -index * 100 + "%)";
-    dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
-  }
-  function goTo(i) { index = (i + slides.length) % slides.length; updateCarousel(); }
-  const nextProd = () => goTo(index + 1);
-  const prevProd = () => goTo(index - 1);
-
-  nextBtn.addEventListener("click", nextProd);
-  prevBtn.addEventListener("click", prevProd);
-
-  // Gesto táctil
-  let startX = 0, dragging = false;
-  const viewport = track.parentElement;
-  viewport.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; dragging = true; }, { passive: true });
-  viewport.addEventListener("touchend", (e) => {
-    if (!dragging) return;
-    dragging = false;
-    const delta = e.changedTouches[0].clientX - startX;
-    if (Math.abs(delta) > 40) (delta < 0 ? nextProd : prevProd)();
-  });
-
-  // Construye los puntos del stepper (1-2-3) una sola vez por slide.
-  slides.forEach((slide, si) => {
-    const stepper = slide.querySelector(".stepper");
-    STEPS.forEach((st, i) => {
-      const li = document.createElement("li");
-      li.className = "step-item";
-      li.innerHTML = `<span class="step-dot">${i + 1}</span><span class="step-label">${st.label}</span>`;
-      li.addEventListener("click", () => { stepOf[si] = i; renderSlide(si); });
-      stepper.appendChild(li);
-    });
-  });
-
-  // Dibuja un slide según su producto, el estilo activo y su paso actual.
-  function renderSlide(si) {
-    const slide = slides[si];
-    const product = slide.dataset.product;
-    const stepIdx = stepOf[si];
+  function render() {
     const step = STEPS[stepIdx];
-    const fileName = step.file(product, style);
-    const media = slide.querySelector(".panel-media");
-    const imgEl = slide.querySelector(".prod-img");
+    const fileName = step.file(style);
 
     media.classList.remove("is-missing");
     imgEl.src = `assets/${fileName}`;
-    imgEl.alt = `${PRODUCTS[product]} — paso ${stepIdx + 1}: ${step.label}`;
-    slide.querySelector(".prod-file").textContent = `assets/${fileName}`;
-    slide.querySelector(".prod-title").textContent = `${PRODUCTS[product]} · ${STYLES[style]}`;
-    slide.querySelector(".prod-desc").textContent = step.desc(product, style);
-    slide.querySelector(".prod-count").textContent = `Paso ${stepIdx + 1} de ${TOTAL_STEPS}`;
+    imgEl.alt = `Colibrí ${STYLES[style]} — capa ${stepIdx + 1}: ${step.label}`;
+    panel.querySelector(".layer-file").textContent = `assets/${fileName}`;
+    titleEl.textContent = `${step.label} · colibrí ${STYLES[style]}`;
+    descEl.textContent = step.desc();
+    countEl.textContent = `Capa ${stepIdx + 1} de ${TOTAL}`;
 
-    // Estado del stepper (activo / completado)
-    slide.querySelectorAll(".step-item").forEach((li, i) => {
+    stepper.querySelectorAll(".step-item").forEach((li, i) => {
       li.classList.toggle("is-active", i === stepIdx);
       li.classList.toggle("is-done", i < stepIdx);
     });
-    // Habilitar/deshabilitar botones de paso
-    slide.querySelector(".prod-prev").disabled = stepIdx === 0;
-    slide.querySelector(".prod-next").disabled = stepIdx === TOTAL_STEPS - 1;
+    prevBtn.disabled = stepIdx === 0;
+    nextBtn.disabled = stepIdx === TOTAL - 1;
   }
 
-  // Conecta los botones de paso de cada slide.
-  slides.forEach((slide, si) => {
-    slide.querySelector(".prod-prev").addEventListener("click", () => {
-      if (stepOf[si] > 0) { stepOf[si]--; renderSlide(si); }
-    });
-    slide.querySelector(".prod-next").addEventListener("click", () => {
-      if (stepOf[si] < TOTAL_STEPS - 1) { stepOf[si]++; renderSlide(si); }
-    });
+  prevBtn.addEventListener("click", () => { if (stepIdx > 0) { stepIdx--; render(); } });
+  nextBtn.addEventListener("click", () => { if (stepIdx < TOTAL - 1) { stepIdx++; render(); } });
+
+  // Gesto táctil para avanzar/retroceder capas en móvil.
+  let startX = 0, dragging = false;
+  media.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; dragging = true; }, { passive: true });
+  media.addEventListener("touchend", (e) => {
+    if (!dragging) return;
+    dragging = false;
+    const delta = e.changedTouches[0].clientX - startX;
+    if (Math.abs(delta) > 40) {
+      if (delta < 0 && stepIdx < TOTAL - 1) stepIdx++;
+      else if (delta > 0 && stepIdx > 0) stepIdx--;
+      render();
+    }
   });
-
-  // Redibuja todos los slides (p. ej. al cambiar de estilo).
-  function renderStyle() {
-    slides.forEach((_, si) => renderSlide(si));
-  }
 
   // --- Selector de estilo ---
   styleTabs.forEach((tab, i) => {
@@ -217,7 +167,7 @@
         t.classList.toggle("is-active", t === tab);
         t.setAttribute("aria-selected", t === tab ? "true" : "false");
       });
-      renderStyle();
+      render();
     });
     tab.addEventListener("keydown", (e) => {
       if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
@@ -229,6 +179,5 @@
     });
   });
 
-  renderStyle();
-  updateCarousel();
+  render();
 })();
