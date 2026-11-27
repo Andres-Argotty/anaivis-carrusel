@@ -1,15 +1,31 @@
 :root {
-  /* Paleta inspirada en el diseño: verdes acuarela, tierra kraft y tricolor */
-  --verde: #3f8f4f;
-  --verde-claro: #6fbf73;
-  --kraft: #c89a6a;
-  --kraft-oscuro: #a97f52;
-  --crema: #fbf6ec;
-  --tinta: #2c2a26;
-  --amarillo: #f4c430;
-  --azul: #2a5db0;
-  --rojo: #d7352c;
-  --sombra: 0 10px 30px rgba(44, 42, 38, 0.15);
+  /* Paleta Biodiversidad Vibrante — Anaivi's Hecho a Mano */
+  --amarillo-sol: #fdc82f;
+  --turquesa: #1fb8a6;
+  --fucsia: #fb5c6c;
+  --azul-caribe: #1f5fc4;
+  --naranja: #f5862b;
+
+  /* Roles semánticos
+     Primario: Azul Caribe · Acentos: Fucsia Coral y Naranja Vivo */
+  --primario: var(--azul-caribe);
+  --primario-claro: #4d87e0;
+  --acento: var(--fucsia);
+  --acento-2: var(--naranja);
+
+  /* Alias de compatibilidad: el resto del CSS sigue usando estos nombres,
+     ahora reasignados a la nueva paleta para propagar el rebranding. */
+  --verde: var(--azul-caribe);        /* color principal */
+  --verde-claro: var(--turquesa);     /* estados "hechos"/secundario */
+  --kraft: var(--naranja);            /* detalles cálidos */
+  --kraft-oscuro: var(--fucsia);      /* etiquetas/acento */
+  --amarillo: var(--amarillo-sol);
+  --azul: var(--azul-caribe);
+  --rojo: var(--fucsia);
+
+  --crema: #fdfaf3;
+  --tinta: #26303d;
+  --sombra: 0 10px 30px rgba(31, 95, 196, 0.15);
   --radio: 18px;
 }
 
@@ -19,9 +35,10 @@ body {
   font-family: "Quicksand", system-ui, sans-serif;
   color: var(--tinta);
   background:
-    radial-gradient(circle at 15% 15%, rgba(111, 191, 115, 0.18), transparent 40%),
-    radial-gradient(circle at 85% 20%, rgba(244, 196, 48, 0.15), transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(42, 93, 176, 0.10), transparent 45%),
+    radial-gradient(circle at 12% 12%, rgba(31, 184, 166, 0.16), transparent 40%),
+    radial-gradient(circle at 88% 15%, rgba(253, 200, 47, 0.18), transparent 42%),
+    radial-gradient(circle at 80% 85%, rgba(251, 92, 108, 0.12), transparent 45%),
+    radial-gradient(circle at 20% 90%, rgba(245, 134, 43, 0.12), transparent 45%),
     var(--crema);
   min-height: 100vh;
   line-height: 1.5;
@@ -39,20 +56,39 @@ body {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin-bottom: 1rem;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #fff;
+  /* Marco circular con la paleta vibrante (evoca el logo floral) */
+  border: 6px solid transparent;
+  background-image:
+    linear-gradient(#fff, #fff),
+    conic-gradient(from 0deg,
+      var(--amarillo-sol),
+      var(--turquesa),
+      var(--azul-caribe),
+      var(--fucsia),
+      var(--naranja),
+      var(--amarillo-sol));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: var(--sombra);
 }
 
 .brand-name {
   font-family: "Caveat", cursive;
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   font-weight: 700;
-  color: var(--verde);
+  color: var(--tinta);
   line-height: 1;
 }
 
 .brand-tag {
   font-family: "Caveat", cursive;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--kraft-oscuro);
   letter-spacing: 0.5px;
 }
@@ -84,11 +120,16 @@ body {
 .headline::after {
   content: "";
   display: block;
-  width: 90px;
+  width: 140px;
   height: 5px;
   margin: 1rem auto 0;
   border-radius: 5px;
-  background: linear-gradient(90deg, var(--amarillo) 0 33%, var(--azul) 33% 66%, var(--rojo) 66% 100%);
+  background: linear-gradient(90deg,
+    var(--amarillo-sol) 0 20%,
+    var(--turquesa) 20% 40%,
+    var(--fucsia) 40% 60%,
+    var(--azul-caribe) 60% 80%,
+    var(--naranja) 80% 100%);
 }
 
 /* ---------- Carrusel ---------- */
@@ -124,7 +165,7 @@ body {
   box-shadow: var(--sombra);
   overflow: hidden;
   min-height: 420px;
-  border: 1px solid rgba(200, 154, 106, 0.25);
+  border: 1px solid rgba(31, 95, 196, 0.18);
 }
 
 .card--template {
@@ -160,7 +201,7 @@ body {
 .media-fallback code {
   display: inline-block;
   margin-top: 0.4rem;
-  background: rgba(168, 127, 82, 0.15);
+  background: rgba(31, 95, 196, 0.12);
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -255,7 +296,7 @@ body {
   height: 11px;
   border-radius: 50%;
   border: none;
-  background: rgba(168, 127, 82, 0.35);
+  background: rgba(31, 95, 196, 0.28);
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
 }
@@ -335,7 +376,7 @@ body {
   font-weight: 600;
   color: var(--kraft-oscuro);
   background: #fff;
-  border: 2px solid rgba(200, 154, 106, 0.4);
+  border: 2px solid rgba(31, 95, 196, 0.35);
   border-radius: 999px;
   padding: 0.55rem 1.3rem;
   cursor: pointer;
@@ -356,7 +397,7 @@ body {
   border-radius: var(--radio);
   box-shadow: var(--sombra);
   overflow: hidden;
-  border: 1px solid rgba(200, 154, 106, 0.25);
+  border: 1px solid rgba(31, 95, 196, 0.18);
   min-height: 360px;
 }
 
@@ -413,7 +454,7 @@ body {
   left: 50%;
   width: 100%;
   height: 2px;
-  background: rgba(168, 127, 82, 0.3);
+  background: rgba(31, 95, 196, 0.25);
   z-index: 0;
 }
 .step-item.is-done:not(:last-child)::after { background: var(--verde-claro); }
@@ -430,7 +471,7 @@ body {
   font-weight: 700;
   background: #fff;
   color: var(--kraft-oscuro);
-  border: 2px solid rgba(168, 127, 82, 0.4);
+  border: 2px solid rgba(31, 95, 196, 0.35);
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 .step-item.is-active .step-dot {
@@ -465,7 +506,7 @@ body {
   font-weight: 600;
   color: var(--verde);
   background: #fff;
-  border: 2px solid rgba(63, 143, 79, 0.4);
+  border: 2px solid rgba(31, 95, 196, 0.35);
   border-radius: 999px;
   padding: 0.4rem 0.9rem;
   cursor: pointer;
