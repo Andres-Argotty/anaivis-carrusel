@@ -3,8 +3,8 @@
 Página web de presentación (estática) para el emprendimiento **Anaivi's — Hecho a mano**.
 
 Muestra un **carrusel** donde una misma plantilla de diseño (el colibrí guardián, en
-acuarela con cinta tricolor) se reinterpreta con IA en distintas paletas, manteniendo el
-animal, la posición y el estilo artesanal.
+acuarela con cinta tricolor) se reinterpreta en distintas paletas, y el **proceso de
+serigrafía por capas**, manteniendo el animal, la posición y el estilo artesanal.
 
 ## Estructura
 
@@ -18,7 +18,7 @@ animal, la posición y el estilo artesanal.
 
 ## Imágenes
 
-Las imágenes se generan con IA y se colocan en `assets/` con estos nombres exactos:
+Las imágenes se colocan en `assets/` con estos nombres exactos:
 
 | Archivo | Contenido |
 |---|---|
